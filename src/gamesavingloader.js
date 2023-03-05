@@ -3,10 +3,10 @@ import toString from './parser';
 import GameSaving from './gamesaving';
 
 export default class GameSavingLoader {
-  static load() {
-    return read()
-      .then((result) => toString(result))
-      .then((result) => JSON.parse(result))
-      .then((result) => new GameSaving(result));
+  static async load() {
+    const binaryData = await read();
+    const extractedString = await toString(binaryData);
+    const obj = JSON.parse(extractedString);
+    return new GameSaving(obj);
   }
 }
